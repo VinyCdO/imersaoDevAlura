@@ -1,5 +1,5 @@
 import fs from "fs";
-import { getTodosPosts, criarPost, atualizarPost } from "../models/postsModel.js";
+import { getTodosPosts, criarPost, atualizarPost, deletarPostCriado } from "../models/postsModel.js";
 import gerarDescricaoComGemini from "../services/geminiService.js";
 
 export async function listarPosts(req, res) {
@@ -58,6 +58,20 @@ export async function atualizarNovoPost(req, res) {
     const postCriado = await atualizarPost(id, post);
     
     res.status(200).json(postCriado);
+  } catch (erro) {
+    console.error(erro.message);
+    res.status(500).json({"Erro":"Falha na requisição."})
+  }
+}
+
+export async function deletarPost(req, res) {
+  const id = req.params.id;
+  
+  try {
+  
+    const postDeletado = await deletarPostCriado(id);
+    
+    res.status(200).json(postDeletado);
   } catch (erro) {
     console.error(erro.message);
     res.status(500).json({"Erro":"Falha na requisição."})

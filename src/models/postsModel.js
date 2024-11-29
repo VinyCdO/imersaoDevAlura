@@ -38,3 +38,15 @@ export async function atualizarPost(id, post) {
   
   return colecao.updateOne({_id: new ObjectId(objId)}, {$set:post});
 }
+
+export async function deletarPostCriado(id) {
+  // Seleciona o banco de dados 'imersao-instabytes'
+  const db = conexao.db("imersao-instabytes");
+
+  // Seleciona a coleção 'posts' dentro do banco de dados
+  const colecao = db.collection("posts");
+
+  const objId = ObjectId.createFromHexString(id);
+  
+  return colecao.deleteOne({_id: new ObjectId(objId)});
+}
